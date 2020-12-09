@@ -1,0 +1,42 @@
+#import dataset
+deck <- read.csv('https://github.com/gumdropsteve/datasets/raw/master/deck.csv')
+# variable to hold the current round's highest score & the player who scored it
+current_round_best_score <- 0
+current_round_leader <- NA
+n_rounds <- 1000
+n_players <- 4
+
+# make a null vector to record each round's winner
+winners <- rep(NA, n_rounds)
+scores <- rep(NA, n_rounds)
+
+for (i in 1:n_rounds){
+  for (j in 1:n_players){
+    deck <- deck[sample(nrow(deck)),]
+    deckShufeel <- sample(deck ,3, replace = F)
+    
+    if(deckShufeel > current_round_best_score){
+      current_round_best_score <- sum(deckShufeel$value[1:3])
+      current_round_leader <- j
+    }
+    winners[i] <- current_round_leader
+    scores[i] <- current_round_best_score
+  }
+ 
+}
+result = table(winners)
+result
+
+results_scores = table(scores)
+results_scores
+
+
+# plot
+plot(winners)
+plot(results_scores)
+
+# histogram 
+hist(winners)
+# qplot
+library(ggplot2)
+qplot(sort(winners))
