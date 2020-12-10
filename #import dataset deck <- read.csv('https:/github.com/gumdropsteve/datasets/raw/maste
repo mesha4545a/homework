@@ -14,9 +14,10 @@ for (i in 1:n_rounds){
   for (j in 1:n_players){
     deck <- deck[sample(nrow(deck)),]
     deckShufeel <- sample(deck ,3, replace = F)
+    deckShufeel <- sum(deckShufeel$value[1:3])
     
     if(deckShufeel > current_round_best_score){
-      current_round_best_score <- sum(deckShufeel$value[1:3])
+      current_round_best_score <- deckShufeel
       current_round_leader <- j
     }
     winners[i] <- current_round_leader
@@ -33,7 +34,7 @@ results_scores
 
 # plot
 plot(winners)
-plot(results_scores)
+plot(result)
 
 # histogram 
 hist(winners)
